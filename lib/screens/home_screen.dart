@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PlaylistList(playlists: playlists), // Display the dynamic list of playlists
+      body: PlaylistList(playlists: playlists, appNavigator: widget.appNavigator,),
       bottomNavigationBar: BottomNavBar(
         selectedIndex: 0,
         onItemTapped: (index) {

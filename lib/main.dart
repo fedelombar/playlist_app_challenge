@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:playlist_app/screens/home_screen.dart';
+import 'package:playlist_app/screens/playlist_view.dart';
+import 'models/playlist.dart';
 import 'navigators/app_navigator.dart';
 import 'theme/custom_theme.dart';
 
@@ -26,10 +28,14 @@ class MyApp extends StatelessWidget {
   Route<dynamic> _generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (context) => HomeScreen(appNavigator: appNavigator),);
-
+        return MaterialPageRoute(builder: (context) => HomeScreen(appNavigator: appNavigator));
+      case '/playlistView':
+        final playlist = settings.arguments as Playlist;
+        return MaterialPageRoute(
+          builder: (context) => PlaylistView(playlist: playlist, appNavigator: appNavigator),
+        );
       default:
-      // Return a default page if no other route matches.
+      // Retorna una página por defecto si ninguna otra ruta coincide
         return MaterialPageRoute(builder: (context) => Scaffold(
           body: Center(
             child: Text('No route defined for ${settings.name}'),
@@ -38,4 +44,3 @@ class MyApp extends StatelessWidget {
     }
   }
 }
-

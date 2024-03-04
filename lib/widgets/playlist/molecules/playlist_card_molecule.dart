@@ -25,14 +25,14 @@ class PlaylistCardMolecule extends StatelessWidget {
         child: Row(
           children: [
             ImageAtom(thumbnailUrl: thumbnailUrl),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextAtom(text: title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 5),
-                  TextAtom(text: description, style: TextStyle(fontSize: 14)),
+                  TextAtom(text: title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 5),
+                  TextAtom(text: description, style: const TextStyle(fontSize: 14)),
                 ],
               ),
             ),

@@ -11,5 +11,4 @@ class AppNavigator {
     return navigatorKey.currentState!.pop();
   }
 
-// Add any other custom navigation logic here...
 }

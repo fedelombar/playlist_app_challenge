@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import '../../../models/playlist.dart';
+import '../../../navigators/app_navigator.dart';
+import '../../../screens/playlist_view.dart';
 import '../../../widgets/playlist/molecules/playlist_card_molecule.dart';
-import '../../molecules/playlist_item.dart';
 
 class PlaylistList extends StatelessWidget {
   final List<Playlist> playlists;
+  final AppNavigator appNavigator;
 
   const PlaylistList({
     Key? key,
     required this.playlists,
+    required this.appNavigator,
   }) : super(key: key);
 
   @override
@@ -17,14 +20,22 @@ class PlaylistList extends StatelessWidget {
       itemCount: playlists.length,
       itemBuilder: (context, index) {
         final playlist = playlists[index];
-        return PlaylistCardMolecule(
-          title: playlist.title ?? 'Untitled Playlist',
-          description: playlist.description ?? 'No description',
-          thumbnailUrl: playlist.thumbnail ?? '',
-          // privacy: playlist.isPrivate,
+        return InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => PlaylistView(playlist: playlist, appNavigator: appNavigator),
+              ),
+            );
+          },
+          child: PlaylistCardMolecule(
+            title: playlist.title ?? 'Untitled Playlist',
+            description: playlist.description ?? 'No description',
+            thumbnailUrl: playlist.thumbnail ?? '',
+            // privacy: playlist.isPrivate,
+          ),
         );
       },
     );
   }
 }
-

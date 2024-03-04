@@ -1,0 +1,43 @@
+name: playlist_app
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: 0.13.3
+  iconly: 1.0.1
+  cupertino_icons: ^1.0.6
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+
+flutter:
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+#   assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+
+  fonts:
+    - family: SFProDisplay
+      fonts:
+        - asset: fonts/SFProDisplay-Light.otf
+          weight: 300
+        - asset: fonts/SFProDisplay-Regular.otf
+        - asset: fonts/SFProDisplay-Medium.otf
+          weight: 500
+        - asset: fonts/SFProDisplay-Bold.otf
+          weight: 700

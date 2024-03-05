@@ -28,6 +28,8 @@ flutter:
 
   assets:
     - assets/data/playlists.json
+    - assets/images/
+    - assets/icons/
 
   fonts:
     - family: SFProDisplay

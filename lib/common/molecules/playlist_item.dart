@@ -17,7 +17,7 @@ class PlaylistItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      // leading: Image.network(thumbnailUrl, width: 10, height: 10), // Consider caching images in a real app
+      leading: Image.asset(thumbnailUrl),
       title: Text(title),
       subtitle: Text(description),
       // onTap: Navigate or perform other actions

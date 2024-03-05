@@ -15,7 +15,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Playlist> playlists = []; // Initially empty, will be populated dynamically
+  List<Playlist> playlists =
+      []; // Initially empty, will be populated dynamically
 
   @override
   void initState() {
@@ -27,11 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void _loadPlaylists() async {
     // Simulate fetching playlists
     // This could be replaced with a real fetch from a database or network call
-    var fetchedPlaylists = await PlaylistService.loadPlaylists(); // Load playlists from a service
+    var fetchedPlaylists =
+        await PlaylistService.loadPlaylists(); // Load playlists from a service
     setState(() {
       playlists = fetchedPlaylists;
     });
   }
+
   //
   // void _addPlaylist(Playlist newPlaylist) {
   //   setState(() {
@@ -42,15 +45,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PlaylistList(playlists: playlists, appNavigator: widget.appNavigator,),
+      body: PlaylistList(
+        playlists: playlists,
+        appNavigator: widget.appNavigator,
+      ),
       bottomNavigationBar: BottomNavBar(
         selectedIndex: 0,
         onItemTapped: (index) {
           // Handle item tap
         },
         onCenterItemTapped: () {
-          // Here, you could open a modal to create a new playlist
-          // For demonstration, let's simulate adding a new playlist
+          // let's simulate adding a new playlist
           // _addPlaylist(Playlist(
           //   name: 'New Playlist ${playlists.length}',
           //   description: 'Description for Playlist ${playlists.length}',

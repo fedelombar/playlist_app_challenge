@@ -3,8 +3,11 @@
     "id": "1",
     "title": "Live Video Calls",
     "description": "The best summer songs",
-    "privacy": false,
-    "thumbnailUrl": "https://i.ytimg.com/vi/9YffrCViTVk/maxresdefault.jpg",
+    "privacy": true,
+    "thumbnailUrl": "assets/images/girl_playlist_view_bg.jpeg",
+    "videosQuantity": 100,
+    "views": "5.2K",
+    "time": "04:29:30",
     "contentIds": ["1", "2", "3"]
   }
 ]

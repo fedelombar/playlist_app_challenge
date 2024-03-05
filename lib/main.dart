@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey: appNavigator.navigatorKey,
       onGenerateRoute: _generateRoute,
-      theme: CustomTheme.darkTheme, //we choose dark theme, but if we want to use light theme, we can use lightTheme: CustomTheme.lightTheme apply under this.
+      theme: CustomTheme.darkTheme, // we choose dark theme, but if we want to use light theme, we can use lightTheme: CustomTheme.lightTheme.
       home:  HomeScreen(appNavigator: appNavigator),
     );
   }
@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
           builder: (context) => PlaylistView(playlist: playlist, appNavigator: appNavigator),
         );
       default:
-      // Retorna una página por defecto si ninguna otra ruta coincide
         return MaterialPageRoute(builder: (context) => Scaffold(
           body: Center(
             child: Text('No route defined for ${settings.name}'),

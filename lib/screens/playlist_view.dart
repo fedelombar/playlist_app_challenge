@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:playlist_app/models/playlist_content_model.dart';
 import 'package:playlist_app/widgets/playlist_view/organisms/custom_app_bar_play_view.dart';
@@ -6,6 +8,7 @@ import 'package:playlist_app/models/playlist.dart';
 import 'package:playlist_app/navigators/app_navigator.dart';
 
 import '../controllers/playlist_controller.dart';
+import '../widgets/playlist_view/atoms/save_button.dart';
 import '../widgets/playlist_view/organisms/content_card_playlist_view.dart';
 
 class PlaylistView extends StatefulWidget {
@@ -21,7 +24,7 @@ class PlaylistView extends StatefulWidget {
 }
 
 class _PlaylistViewState extends State<PlaylistView> {
-  late List<PlaylistContent> _contentItems;
+  List<PlaylistContent> _contentItems = [];
   late List<int> _itemOrder; // Track the order of items
   bool _isDragging = false;
   bool _showSaveButton = false; // Show save button when dragging starts
@@ -34,12 +37,25 @@ class _PlaylistViewState extends State<PlaylistView> {
 
   Future<void> _loadContentItems() async {
     final playlistContentController = PlaylistContentController();
+    // Attempt to load the saved order
+    _itemOrder = await playlistContentController.loadOrder();
+    // Load the playlist content
     final items = await playlistContentController.loadPlaylistContent();
-    setState(() {
-      _contentItems = items;
-      _itemOrder = List.generate(
-          _contentItems.length, (index) => index); // Initialize item order
-    });
+
+    // Check if we have a saved order that matches the items list length
+    if (_itemOrder.isNotEmpty && _itemOrder.length == items.length) {
+      // Reorder items according to saved order
+      List<PlaylistContent> reorderedItems = List.generate(_itemOrder.length, (index) => items[_itemOrder[index]]);
+      setState(() {
+        _contentItems = reorderedItems;
+      });
+    } else {
+      // No saved order or mismatch, use default order
+      setState(() {
+        _contentItems = items;
+        _itemOrder = List.generate(items.length, (index) => index);
+      });
+    }
   }
 
   void _onDragStarted() {
@@ -63,9 +79,11 @@ class _PlaylistViewState extends State<PlaylistView> {
     });
   }
 
-  void _onSaveOrder() {
-    // Logic to save the new order
-    // After saving, hide the Save button
+  void _onSaveOrder() async {
+    await PlaylistContentController().saveOrder(_itemOrder);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Order saved successfully!')),
+    );
     setState(() {
       _showSaveButton = false;
     });
@@ -91,11 +109,53 @@ class _PlaylistViewState extends State<PlaylistView> {
           onDragEnd: (details) => _onDragCompleted(),
           feedback: Material(
             elevation: 4.0,
-            child: ContentCardOrganism(
-              imagePath: content.imagePath,
-              date: content.date,
-              likes: content.likes.toString(),
-              tags: content.tags,
+            type: MaterialType.transparency,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
+                child: Container(
+                  width: 166,
+                  height: 273,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white.withOpacity(0.2), // Semi-transparent white
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          content.imagePath,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        color: Colors.black.withOpacity(0.2), // Semi-transparent black
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              content.description,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Wrap(
+                              children: content.tags.map((tag) => Text(
+                                '#$tag ',
+                                style: TextStyle(color: Colors.white),
+                              )).toList(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
           childWhenDragging: Container(),
@@ -106,17 +166,17 @@ class _PlaylistViewState extends State<PlaylistView> {
             },
             builder: (context, candidateData, rejectedData) =>
                 ContentCardOrganism(
-              imagePath: content.imagePath,
-              date: content.date,
-              likes: content.likes.toString(),
-              tags: content.tags,
+                  imagePath: content.imagePath,
+                  date: content.date,
+                  likes: content.likes,
+                  description: content.description,
+                  tags: content.tags,
             ),
           ),
         );
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -134,36 +194,8 @@ class _PlaylistViewState extends State<PlaylistView> {
               ),
             ],
           ),
-          if (_showSaveButton)
-            Positioned(
-              bottom: 10, // Adjust based on the bottomNavBar height and desired spacing
-              left: 0,
-              right: 0,
-              child: Center( // Center the button horizontally
-                child: InkWell(
-                  onTap: _onSaveOrder,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 60),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      gradient: const LinearGradient(
-                        colors: [Colors.deepPurple, Colors.purple],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                    ),
-                    child: const Text(
-                      "Save",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          // Conditionally show the SaveButtonWidget
+          if (_showSaveButton) SaveButtonWidget(onSaveOrder: _onSaveOrder),
         ],
       ),
       bottomNavigationBar: BottomNavBar(

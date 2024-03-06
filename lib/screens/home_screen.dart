@@ -15,8 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Playlist> playlists =
-      []; // Initially empty, will be populated dynamically
+  List<Playlist> playlists = []; // Initially empty, will be populated dynamically
 
   @override
   void initState() {
@@ -45,26 +44,31 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PlaylistList(
-        playlists: playlists,
-        appNavigator: widget.appNavigator,
+      appBar: AppBar(
+        title: const Text('Your Playlists'),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        titleTextStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: PlaylistList(
+              playlists: playlists,
+              appNavigator: widget.appNavigator,
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavBar(
         selectedIndex: 0,
-        onItemTapped: (index) {
-          // Handle item tap
-        },
-        onCenterItemTapped: () {
-          // let's simulate adding a new playlist
-          // _addPlaylist(Playlist(
-          //   name: 'New Playlist ${playlists.length}',
-          //   description: 'Description for Playlist ${playlists.length}',
-          //   thumbnail: 'assets/images/girl_playlist_view_bg.png',
-          //   isPrivate: false,
-          //   contentIds: ['1', '2', '3'],
-          //   title: 'Title',
-          // ));
-        },
+        onItemTapped: (index) {},
+        onCenterItemTapped: () {},
         appNavigator: widget.appNavigator,
       ),
     );

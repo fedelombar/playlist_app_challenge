@@ -12,7 +12,9 @@ class PlaylistView extends StatefulWidget {
   final Playlist playlist;
   final AppNavigator appNavigator;
 
-  const PlaylistView({Key? key, required this.playlist, required this.appNavigator}) : super(key: key);
+  const PlaylistView(
+      {Key? key, required this.playlist, required this.appNavigator})
+      : super(key: key);
 
   @override
   _PlaylistViewState createState() => _PlaylistViewState();
@@ -22,6 +24,7 @@ class _PlaylistViewState extends State<PlaylistView> {
   late List<PlaylistContent> _contentItems;
   late List<int> _itemOrder; // Track the order of items
   bool _isDragging = false;
+  bool _showSaveButton = false; // Show save button when dragging starts
 
   @override
   void initState() {
@@ -34,13 +37,15 @@ class _PlaylistViewState extends State<PlaylistView> {
     final items = await playlistContentController.loadPlaylistContent();
     setState(() {
       _contentItems = items;
-      _itemOrder = List.generate(_contentItems.length, (index) => index); // Initialize item order
+      _itemOrder = List.generate(
+          _contentItems.length, (index) => index); // Initialize item order
     });
   }
 
   void _onDragStarted() {
     setState(() {
       _isDragging = true;
+      _showSaveButton = true;
     });
   }
 
@@ -58,9 +63,17 @@ class _PlaylistViewState extends State<PlaylistView> {
     });
   }
 
+  void _onSaveOrder() {
+    // Logic to save the new order
+    // After saving, hide the Save button
+    setState(() {
+      _showSaveButton = false;
+    });
+  }
+
   Widget _buildContentGrid() {
     return GridView.builder(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -91,7 +104,8 @@ class _PlaylistViewState extends State<PlaylistView> {
             onAccept: (data) {
               _onReorder(data, contentIndex);
             },
-            builder: (context, candidateData, rejectedData) => ContentCardOrganism(
+            builder: (context, candidateData, rejectedData) =>
+                ContentCardOrganism(
               imagePath: content.imagePath,
               date: content.date,
               likes: content.likes.toString(),
@@ -103,28 +117,55 @@ class _PlaylistViewState extends State<PlaylistView> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          CustomAppBarPlaylistView(playlist: widget.playlist),
-          SliverPadding(
-            padding: const EdgeInsets.all(5),
-            sliver: SliverToBoxAdapter(
-              child: _buildContentGrid(),
-            ),
+      body: Stack(
+        children: [
+          CustomScrollView(
+            slivers: <Widget>[
+              CustomAppBarPlaylistView(playlist: widget.playlist),
+              SliverPadding(
+                padding: const EdgeInsets.all(5),
+                sliver: SliverToBoxAdapter(
+                  child: _buildContentGrid(),
+                ),
+              ),
+            ],
           ),
+          if (_showSaveButton)
+            Positioned(
+              bottom: 10, // Adjust based on the bottomNavBar height and desired spacing
+              left: 0,
+              right: 0,
+              child: Center( // Center the button horizontally
+                child: InkWell(
+                  onTap: _onSaveOrder,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 60),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: const LinearGradient(
+                        colors: [Colors.deepPurple, Colors.purple],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                    ),
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
-      floatingActionButton: _isDragging
-          ? FloatingActionButton(
-        onPressed: () {
-          _onDragCompleted();
-        },
-        child: Icon(Icons.save),
-      )
-          : null,
       bottomNavigationBar: BottomNavBar(
         selectedIndex: 1,
         onItemTapped: (index) {},
@@ -133,4 +174,5 @@ class _PlaylistViewState extends State<PlaylistView> {
       ),
     );
   }
+
 }

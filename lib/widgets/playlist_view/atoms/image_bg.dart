@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 class ImageAppBarAtom extends StatelessWidget {
   final String thumbnailUrl;
   final bool applyBlur;
-  const ImageAppBarAtom({Key? key, required this.thumbnailUrl, this.applyBlur = false}) : super(key: key);
+
+  const ImageAppBarAtom(
+      {Key? key, required this.thumbnailUrl, this.applyBlur = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,10 @@ class ImageAppBarAtom extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.black12.withOpacity(0.8), Colors.deepPurple.withOpacity(0.2)],
+              colors: [
+                Colors.black12.withOpacity(0.8),
+                Colors.deepPurple.withOpacity(0.2)
+              ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),

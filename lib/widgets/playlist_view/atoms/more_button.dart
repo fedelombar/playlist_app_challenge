@@ -27,32 +27,28 @@ class MoreButton extends StatelessWidget {
                   leading: Icon(IconlyLight.edit_square, color: Colors.white),
                   title: Text('Edit', style: TextStyle(color: Colors.white)),
                   onTap: () {
-                    Navigator.pop(context); // Cierra la hoja modal
-                    // Lógica para editar
+                    Navigator.pop(context);
                   },
                 ),
                 ListTile(
                   leading: Icon(IconlyLight.upload, color: Colors.white),
                   title: Text('Share', style: TextStyle(color: Colors.white)),
                   onTap: () {
-                    Navigator.pop(context); // Cierra la hoja modal
-                    // Lógica para compartir
+                    Navigator.pop(context);
                   },
                 ),
                 ListTile(
                   leading: Icon(IconlyLight.lock, color: Colors.white),
                   title: Text('Archive', style: TextStyle(color: Colors.white)),
                   onTap: () {
-                    Navigator.pop(context); // Cierra la hoja modal
-                    // Lógica para archivar
+                    Navigator.pop(context);
                   },
                 ),
                 ListTile(
                   leading: Icon(IconlyLight.delete, color: Colors.red),
                   title: Text('Remove', style: TextStyle(color: Colors.red)),
                   onTap: () {
-                    Navigator.pop(context); // Cierra la hoja modal
-                    // Lógica para eliminar
+                    Navigator.pop(context);
                   },
                 ),
               ],

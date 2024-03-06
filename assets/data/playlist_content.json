@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "image_url": "assets/images/content_cards/vogue_content_image.png",
+    "date": "23/09/2023",
+    "likes": 2.1,
+    "description": "Magazine Haul",
+    "tags": ["#vogue", "#voguemagazine"]
+  },
+  {
+    "id": "2",
+    "image_url": "assets/images/content_cards/cooking_content_image.png",
+    "date": "17/04/2023",
+    "likes": 122.1,
+    "description": "Cooking mama",
+    "tags": ["#pastaforthe", "win"]
+  },
+  {
+    "id": "3",
+    "image_url": "assets/images/content_cards/flowers_selfie_content_image.png",
+    "date": "17/04/2023",
+    "likes": 143,
+    "description": "Flowers selfie",
+    "tags": ["flowers", "lady"]
+  },
+  {
+    "id": "4",
+    "image_url": "assets/images/content_cards/working_content_image.png",
+    "date": "17/04/2023",
+    "likes": 89,
+    "description": "Design work",
+    "tags": ["working", "friends"]
+  },
+  {
+    "id": "5",
+    "image_url": "assets/images/content_cards/cooking_content_image.png",
+    "date": "17/04/2023",
+    "likes": 122.1,
+    "description": "Cooking mama",
+    "tags": ["#pastaforthe", "win"]
+  },
+  {
+    "id": "6",
+    "image_url": "assets/images/content_cards/cooking_content_image.png",
+    "date": "17/04/2023",
+    "likes": 122.1,
+    "description": "Cooking mama",
+    "tags": ["#pastaforthe", "win"]
+  }
+]

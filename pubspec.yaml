@@ -27,9 +27,10 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/data/playlists.json
+    - assets/data/
     - assets/images/
     - assets/icons/
+    - assets/images/content_cards/
 
   fonts:
     - family: SFProDisplay

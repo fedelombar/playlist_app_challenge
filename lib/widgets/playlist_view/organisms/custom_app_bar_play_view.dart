@@ -22,7 +22,7 @@ class CustomAppBarPlaylistView extends StatelessWidget {
       systemOverlayStyle:
           const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
       expandedHeight: 275.0,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       elevation: 0.0,
       pinned: true,
       stretch: true,
@@ -53,18 +53,15 @@ class CustomAppBarPlaylistView extends StatelessWidget {
         ],
       ),
       leadingWidth: 80.0,
-      leading: Container(
-        margin: const EdgeInsets.only(left: 24.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(56.0),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
-            child: Container(
-              height: 56.0,
-              width: 56.0,
-              alignment: Alignment.center,
-              child: CustomBackButton(),
-            ),
+      leading: ClipRRect(
+        borderRadius: BorderRadius.circular(56.0),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+          child: Container(
+            height: 56.0,
+            width: 56.0,
+            alignment: Alignment.center,
+            child: CustomBackButton(),
           ),
         ),
       ),

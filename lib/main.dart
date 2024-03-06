@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       navigatorKey: appNavigator.navigatorKey,
       onGenerateRoute: _generateRoute,
       theme: CustomTheme.darkTheme, // we choose dark theme, but if we want to use light theme, we can use lightTheme: CustomTheme.lightTheme.
